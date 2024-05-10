@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather app</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+    <div class="card">
+        <div class="search">
+            <input type="text" placeholder="enter city name" spellcheck="false">
+            <button><img src="search.png" ></button>
+        </div>
+        <div class="weather">
+            <img src="rain.png" class="weathericon">
+            <h1 class="temp">23°c</h1>
+            <h2 class="city">new delhi</h2>
+            <div class="details">
+                <div class="col">
+                    <img src="humidity.png">
+                    <div>
+                        <p class="humidity">65%</p>
+                        <p>humidity</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="wind.png">
+                    <div>
+                        <p class="wind">15 km/h</p>
+                        <p>wind speed</p>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+    <script>
+        const apikey = "9fe0f13ae2732ce90d069637f861cfc9";
+        const apiurl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+        const searchbox = document.querySelector(".search input");
+        const searchbtn = document.querySelector(".search button");
+        
+
+        async function checkweather(city){
+            const response = await fetch(apiurl + city + `&appid=${apikey}`);
+            var data = await response.json();
+
+            console.log(data);
+
+            document.querySelector(".city").innerHTML = data.name;
+            document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
+            document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+            document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+
+
+            document.querySelector(".weather").style.display = "block";
+         }
+
+         
+
+         searchbtn.addEventListener("click", ()=>{
+            checkweather(searchbox.value);
+         })
+
+        
+
+// https://api.openweathermap.org/data/2.5/weather?q=delhi&appid=9fe0f13ae2732ce90d069637f861cfc9
+
+
+    </script>
+
+       
+          
+    
+</body>
+</html>
